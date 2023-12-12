@@ -49,7 +49,7 @@ void	fill_array(t_vertex *array, char **lines, int i, int k)
 		while (verteces[j])
 		{
 			array[k].x = j;
-			array[k].y = ft_atoi(verteces[j]);
+			array[k].y = -1 * ft_atoi(verteces[j]);
 			array[k].z = i;
 			array[k].w = 1;
 			j++;
