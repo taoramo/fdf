@@ -62,7 +62,7 @@ static t_vertex	*exit_function(t_vertex *array)
 	return (0);
 }
 
-void	*draw_lines(t_vertex *array)
+void	draw_lines(t_vertex *array)
 {
 	int			i;
 	int			j;
@@ -71,7 +71,7 @@ void	*draw_lines(t_vertex *array)
 	model = ft_calloc(sizeof(t_vertex), (find_max_x(array)
 				* find_max_z(array) * 3 * MODEL_SCALE));
 	if (!model)
-		return (exit_function(array));
+		exit_function(array);
 	scale(array, MODEL_SCALE, MODEL_SCALE, MODEL_SCALE);
 	i = 0;
 	j = 0;
@@ -88,5 +88,5 @@ void	*draw_lines(t_vertex *array)
 		i++;
 	}
 	free(array);
-	init_img(model);
+	init_img(model, j);
 }

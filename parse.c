@@ -15,14 +15,14 @@ int	count_strs(char **lines)
 	return (count);
 }
 
-int	count_vertex(char **lines, int linecount)
+int	count_vertex(char **lines)
 {
 	char	**vertex;
 	int		i;
-	int		j;
 	int		count;
 
 	i = 0;
+	count = 0;
 	while (lines[i])
 	{
 		vertex = ft_split(lines[i], ' ');
@@ -71,7 +71,7 @@ t_vertex	*parse(char *map)
 	if (!lines)
 		return (0);
 	linecount = count_strs(lines);
-	vertexcount = count_vertex(lines, linecount);
+	vertexcount = count_vertex(lines);
 	array = ft_calloc(sizeof(int) * 4, vertexcount + 1);
 	if (!array)
 	{

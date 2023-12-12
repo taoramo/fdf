@@ -41,7 +41,7 @@ int	find_max_x(t_vertex *array)
 	biggest = INT_MIN;
 	while (array[i].w)
 	{
-		if (array[i].x < biggest)
+		if (array[i].x > biggest)
 			biggest = array[i].x;
 		i++;
 	}
@@ -57,7 +57,7 @@ int	find_max_y(t_vertex *array)
 	biggest = INT_MIN;
 	while (array[i].w)
 	{
-		if (array[i].y < biggest)
+		if (array[i].y > biggest)
 			biggest = array[i].y;
 		i++;
 	}

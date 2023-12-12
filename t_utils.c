@@ -20,10 +20,10 @@ t_transform	*default_transform(t_transform *t)
 	t->right = 15 * MODEL_SCALE;
 	t->bottom = 0;
 	t->top = 15 * MODEL_SCALE;
-	t->near = -1 * 20 * MODEL_SCALE;
-	t->far = 0;
+	t->near = 20 * MODEL_SCALE;
+	t->far = -20;
 	t->tx = 0;
 	t->ty = 0;
-	t->tz = 0;
+	t->tz = 200;
 	return (t);
 }

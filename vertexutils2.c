@@ -67,7 +67,7 @@ int	find_max_z(t_vertex *array)
 	biggest = INT_MIN;
 	while (array[i].w)
 	{
-		if (array[i].z < biggest)
+		if (array[i].z > biggest)
 			biggest = array[i].z;
 		i++;
 	}
