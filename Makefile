@@ -1,10 +1,10 @@
 NAME = fdf
-CFLAGS = -g -Wextra -Wall -Werror -Wunreachable-code
+CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -o2fast
 LIBMLX = ./MLX42
 HEADERS = -I ./include -I $(LIBMLX)/include
 LIBS = $(MLX) $(LIBFT)
-MLX = $(LIBMLX)/build/libmlx42.a -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-SRCS = draw_lines.c fdf.c matrix.c matrix2.c parse.c pipeline.c t_utils.c vertexutils.c vertexutils2.c vertexutils3.c
+MLX = $(LIBMLX)/build/libmlx42.a -Iinclude -lglfw
+SRCS = draw_lines.c fdf.c matrix.c matrix2.c parse.c pipeline.c t_utils.c vertexutils.c vertexutils2.c vertexutils3.c ft_hexstr_to_int.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 

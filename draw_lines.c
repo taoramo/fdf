@@ -56,6 +56,53 @@ void	bresenham_near(t_vertex *model, int i,
 	}
 }
 
+void	draw_line_x(t_vertex *model, int i, t_vertex v1, t_vertex v2)
+{
+	double	dx;
+	double	dy;
+	double	x;
+	double	y;
+
+	x = v1.x;
+	y = v1.y;
+	dx = v2.x - v1.x;
+	dy = v2.y - v1.y;
+	while (x < v2.x)
+	{
+		model[i].x = x;
+		model[i].y = y;
+		model[i].z = v1.z;
+		model[i].w = 1;
+		x += dx / MODEL_SCALE;
+		y += dy / MODEL_SCALE;
+
+		i++;
+	}
+}
+
+void	draw_line_z(t_vertex *model, int i, t_vertex v1, t_vertex v2)
+{
+	double	dz;
+	double	dy;
+	double	z;
+	double	y;
+
+	z = v1.z;
+	y = v1.y;
+	dz = v2.z - v1.z;
+	dy = v2.y - v1.y;
+	while (z < v2.z)
+	{
+		model[i].z = z;
+		model[i].y = y;
+		model[i].x = v1.x;
+		model[i].w = 1;
+		z += dz / MODEL_SCALE;
+		y += dy / MODEL_SCALE;
+		i++;
+	}
+}
+
 static t_vertex	*exit_function(t_vertex *array)
 {
 	free(array);
@@ -72,17 +119,16 @@ void	draw_lines(t_vertex *array)
 				* find_max_z(array) * 3 * MODEL_SCALE));
 	if (!model)
 		exit_function(array);
-	scale(array, MODEL_SCALE, MODEL_SCALE, MODEL_SCALE);
 	i = 0;
 	j = 0;
 	while (array[i].w)
 	{
-		if (vertex_exists_xz(array, array[i].x + MODEL_SCALE, array[i].z))
-			bresenham_right(model, j, array[i], array[i + 1]);
+		if (vertex_exists_xz(array, array[i].x + 1, array[i].z))
+			draw_line_x(model, j, array[i], array[i + 1]);
 		while (model[j].w)
 			j++;
-		if (vertex_exists_xz(array, array[i].x, array[i].z + MODEL_SCALE))
-			bresenham_near(model, j, array[i], find_vrtx_clsr(array, array[i]));
+		if (vertex_exists_xz(array, array[i].x, array[i].z + 1))
+			draw_line_z(model, j, array[i], find_vrtx_clsr(array, array[i]));
 		while (model[j].w)
 			j++;
 		i++;

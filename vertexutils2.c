@@ -18,9 +18,9 @@ void	scale(t_vertex *array, int x, int y, int z)
 	i = 0;
 	while (array[i].w)
 	{
-		array[i].x *= x;
-		array[i].y *= y;
-		array[i].z *= z;
+		array[i].x =  array[i].x * x;
+		array[i].y = array[i].y * y;
+		array[i].z = array[i].z * z;;
 		i++;
 	}
 }
@@ -51,7 +51,7 @@ t_vertex	find_vrtx_clsr(t_vertex *array, t_vertex vertex)
 	empty.w = 0;
 	while (array[i].w)
 	{
-		if (array[i].x == vertex.x && array[i].z == vertex.z + MODEL_SCALE)
+		if (array[i].x == vertex.x && array[i].z == vertex.z + 1)
 			return (array[i]);
 		i++;
 	}

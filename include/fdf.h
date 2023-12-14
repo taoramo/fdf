@@ -12,13 +12,14 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # define WIDTH 1280
 # define HEIGHT 1080
-# define MODEL_SCALE 10
+# define MODEL_SCALE 100
 
 typedef struct s_vertex {
 	float	x;
 	float	y;
 	float	z;
 	float	w;
+	int		color;
 	bool	enabled;
 }	t_vertex;
 typedef struct s_transform {
@@ -35,10 +36,12 @@ typedef struct s_transform {
 	float				near;
 	float				far;
 	t_vertex			*model;
+	t_vertex			*raw;
 	double				*m;
 	mlx_t				*mlx;
 	mlx_image_t			*img;
 	int					msize;
+	int					angle;
 }	t_transform;
 t_vertex	*parse(char *map);
 int			find_min_x(t_vertex *array);
@@ -62,4 +65,6 @@ void		init_img(t_vertex *model, int count);
 double		*scalem(double *m, t_transform *t);
 void		hook(void *t);
 void		apply_m(t_vertex *model, double *m);
+int			ft_hexstr_to_int(char *str);
+void		make_fustrum(double fovy, double aspect, t_transform *t);
 #endif
