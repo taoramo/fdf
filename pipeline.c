@@ -1,5 +1,38 @@
 #include "include/fdf.h"
 
+int get_rgba(int r, int g, int b, int a)
+{
+    return (r << 24 | g << 16 | b << 8 | a);
+}
+
+void	color(t_transform *t)
+{
+	int		i;
+	int		red;
+	int		green;
+	int		blue;
+	double	ratio;
+
+	t->max_y = find_max_y(t->raw);
+	t->min_y = find_min_y(t->raw);
+	i = 0;
+	while (i < t->msize)
+	{
+		ratio = 2 * (t->raw[i].y - t->min_y) * (t->max_y - t->min_y);
+		if (255 * (1 - ratio) > 0)
+			red = 255 * (1 - ratio);
+		else
+			red = 0;
+		if (ratio - 1 > 0)
+			blue = 255 * (ratio - 1);
+		else
+			blue = 0;
+		green = 255 - blue - red;
+		t->raw[i].color = get_rgba(red, green, blue, 255);
+		i++;
+	}
+}
+
 void	viewport(t_transform *t)
 {
 	int	i;
@@ -74,7 +107,7 @@ void	render_loop(t_transform *t)
 	printf("%f\n", t->model[0].z);
 	normalize_and_clip(t);
 	viewport(t);
-	memset(img_new->pixels, 255, img_new->width
+	memset(img_new->pixels, get_rgba(0, 0, 0, 0), img_new->width
 		* img_new->height * sizeof(int32_t));
 	i = 0;
 	while (i < t->msize)
@@ -124,6 +157,8 @@ void	hook(void *param)
 		t->angle -= 10;
 		make_fustrum(t->angle % 180, WIDTH * 1.0 / HEIGHT, t);
 	}
+	if (mlx_is_key_down(t->mlx, MLX_KEY_C))
+		color(t);
 	render_loop(t);
 }
 
@@ -132,11 +167,12 @@ void	render(t_transform *t)
 	int	i;
 
 	t = default_transform(t);
+	ft_memcpy(t->raw, t->model, t->msize * sizeof(t_vertex));
 	apply_m(t->model, modelm(t->m, t));
 	apply_m(t->model, perspectivem(t->m, t));
 	normalize_and_clip(t);
 	viewport(t);
-	memset(t->img->pixels, 255, t->img->width
+	memset(t->img->pixels, get_rgba(0, 0, 0, 255), t->img->width
 		* t->img->height * sizeof(int32_t));
 	i = 0;
 	while (i < t->msize)
@@ -171,7 +207,6 @@ void	init_img(t_vertex *model, int count)
 	t.msize = count;
 	if (!mlx || !img || !raw)
 		ft_error(&t);
-	ft_memcpy(raw, model, count * sizeof(t_vertex));
 	t.raw = raw;
 	render(&t);
 }

@@ -37,6 +37,6 @@ t_transform	*default_transform(t_transform *t)
 	make_fustrum(t->angle, WIDTH * 1.0 / HEIGHT, t);
 	t->tx = 0;
 	t->ty = 0;
-	t->tz = 0;
+	t->tz = -30;
 	return (t);
 }
