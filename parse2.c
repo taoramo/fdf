@@ -1,5 +1,3 @@
-#include "include/fdf.h"
-
 int	count_wordsperline(char *str)
 {
 	int	i;
@@ -13,6 +11,8 @@ int	count_wordsperline(char *str)
 	{
 		if (str[i] == ' ')
 			count++;
+		while (str[i] == ' ')
+			i++;
 		i++;
 	}
 	return (count);
@@ -44,8 +44,6 @@ int	count_lines(char *map)
 
 	i = 0;
 	count = 0;
-	if (map[0] != 0)
-		count++;
 	while (map[i])
 	{
 		if (map[i] == '\n')
@@ -53,36 +51,4 @@ int	count_lines(char *map)
 		i++;
 	}
 	return (count);
-}
-
-void	parse2(char *map, t_transform *t)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (map[i])
-	{
-	}
-}
-
-void	parse(char *map, t_transform *t)
-{
-	int			i;
-	t_vertex	*array;
-	int			wpl_max;
-	int			linecount;
-
-	wpl_max = wordsperline_max(map);
-	linecount = count_lines(map);
-	array = ft_calloc(sizeof(t_vertex), wpl_max * linecount);
-	if (!array)
-	{
-		free(map);
-		exit(1);
-	}
-	t->stride = wpl_max;
-	t->raw = array;
-	parse2(array, map, t);
 }

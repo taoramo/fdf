@@ -1,6 +1,6 @@
 #include "include/fdf.h"
 
-t_transform	*init_transform(t_transform *t)
+t_fdf	*init_fdf(t_fdf *t)
 {
 	t->a = 0;
 	t->b = 0;
@@ -11,7 +11,7 @@ t_transform	*init_transform(t_transform *t)
 	return (t);
 }
 
-void	make_fustrum(double fovy, double aspect, t_transform *t)
+void	make_fustrum(double fovy, double aspect, t_fdf *t)
 {
 	double		degtorad;
 	double		tangent;
@@ -26,7 +26,7 @@ void	make_fustrum(double fovy, double aspect, t_transform *t)
 	t->top = t->near * tangent;
 }
 
-t_transform	*default_transform(t_transform *t)
+t_fdf	*default_fdf(t_fdf *t)
 {
 	t->a = 0;
 	t->b = 20 * M_PI / 180;

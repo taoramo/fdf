@@ -1,89 +1,86 @@
 #include "include/fdf.h"
 
-void	draw_line_x(t_vertex *model, int i, t_vertex v1, t_vertex v2)
+void	draw_high(t_vertex v1, t_vertex v2, t_fdf *t)
 {
-	double	dx;
-	double	dy;
-	double	x;
-	double	y;
-
-	x = v1.x;
-	y = v1.y;
-	dx = v2.x - v1.x;
-	dy = v2.y - v1.y;
-	while (x < v2.x)
 	{
-		model[i].x = x;
-		model[i].y = y;
-		model[i].z = v1.z;
-		model[i].w = 1;
-		if (v2.x - x >= 0.5)
-			model[i].color = v1.color;
+		if (v1.y > v2.y)
+		{
+			t->dx = round(v1.x - v2.x);
+			t->dy = round(v1.y - v1.y);
+			t->xi = 1;
+			if (t->dy < 0)
+			{
+				t->xi = -1;
+				t->dx = -1 * t->dx;
+			}
+			bres_high(v2, v1, t);
+		}
 		else
-			model[i].color = v2.color;
-		x += dx / MODEL_SCALE;
-		y += dy / MODEL_SCALE;
-		i++;
+		{
+			t->dx = round(v2.x - v1.x);
+			t->dy = round(v2.y - v1.y);
+			t->xi = 1;
+			if (t->dy < 0)
+			{
+				t->xi = -1;
+				t->dx = -1 * t->dx;
+			}
+			bres_high(v1, v2, t);
+		}
 	}
 }
 
-void	draw_line_z(t_vertex *model, int i, t_vertex v1, t_vertex v2)
+void	draw(t_vertex v1, t_vertex v2, t_fdf *t)
 {
-	double	dz;
-	double	dy;
-	double	z;
-	double	y;
-
-	z = v1.z;
-	y = v1.y;
-	dz = v2.z - v1.z;
-	dy = v2.y - v1.y;
-	while (z < v2.z)
+	if (ft_abs(v2.y - v1.y) < ft_abs(v2.x - v1.x))
 	{
-		model[i].z = z;
-		model[i].y = y;
-		model[i].x = v1.x;
-		model[i].w = 1;
-		if (v2.z - z >= 0.5)
-			model[i].color = v1.color;
+		if (v1.x > v2.x)
+		{
+			t->dx = round(v1.x - v2.x);
+			t->dy = round(v1.y - v2.y);
+			t->yi = 1;
+			if (t->dx < 0)
+			{
+				t->yi = -1;
+				t->dy = -1 * t->dy;
+			}
+			bres_low(v2, v1, t);
+		}
 		else
-			model[i].color = v2.color;
-		z += dz / MODEL_SCALE;
-		y += dy / MODEL_SCALE;
-		i++;
+		{
+			t->dx = round(v2.x - v1.x);
+			t->dy = round(v2.y - v1.y);
+			t->yi = 1;
+			if (t->dx < 0)
+			{
+				t->yi = -1;
+				t->dy = -1 * t->dy;
+			}
+			bres_low(v1, v2, t);
+		}
 	}
+	else
+		draw_high(v1, v2, t);
 }
 
-static t_vertex	*exit_function(t_vertex *array)
+void	draw_line(t_fdf *t, int i)
 {
-	free(array);
-	return (0);
+	if (i % t->stride != t->stride - 1 && (vertex_is_valid(t->model[i])
+			&& vertex_is_valid(t->model[i + 1])))
+		draw(t->model[i], t->model[i + 1], t);
+	if (i / t->stride < t->linecount && (vertex_is_valid(t->model[i])
+			&& vertex_is_valid(t->model[i + t->stride])))
+		draw(t->model[i], t->model[i + t->stride], t);
 }
 
-void	draw_lines(t_vertex *array)
+void	draw_lines(t_fdf *t)
 {
-	int			i;
-	int			j;
-	t_vertex	*model;
+	int	i;
 
-	model = ft_calloc(sizeof(t_vertex), (find_max_x(array)
-				* find_max_z(array) * 3 * MODEL_SCALE));
-	if (!model)
-		exit_function(array);
 	i = 0;
-	j = 0;
-	while (array[i].w)
+	while (i < t->msize)
 	{
-		if (vertex_exists_xz(&array[i], array[i].x + 1, array[i].z))
-			draw_line_x(model, j, array[i], array[i + 1]);
-		while (model[j].w)
-			j++;
-		if (vertex_exists_xz(&array[i], array[i].x, array[i].z + 1))
-			draw_line_z(model, j, array[i], find_vrtx_clsr(&array[i], array[i]));
-		while (model[j].w)
-			j++;
+		draw_line(t, i);
 		i++;
 	}
-	free(array);
-	init_img(model, j);
 }

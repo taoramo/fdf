@@ -23,8 +23,7 @@ int	main(int argc, char **argv)
 {
 	int			fd;
 	char		*map;
-	t_vertex	*array;
-	t_transform	t;
+	t_fdf		t;
 
 	(void)argc;
 	map = ft_calloc(sizeof(char), get_map_size(argv[1]));
@@ -32,10 +31,8 @@ int	main(int argc, char **argv)
 	if (!fd || !map)
 		return (1);
 	read(fd, map, get_map_size(argv[1]));
-	array = parse(map, &t);
+	t.map = map;
+	parse(&t);
 	free(map);
 	close(fd);
-	if (!array)
-		return (1);
-	draw_lines(array);
 }

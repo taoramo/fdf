@@ -17,7 +17,7 @@ void	mmult(t_vertex *v, double *m)
 	v->w = w;
 }
 
-double	*modelm(double *m, t_transform *t)
+double	*modelm(double *m, t_fdf *t)
 {
 	m[0] = cos(t->a) * cos(t->b);
 	m[1] = cos(t->a) * sin(t->b) * sin(t->c) - sin(t->a) * cos(t->c);
@@ -38,7 +38,7 @@ double	*modelm(double *m, t_transform *t)
 	return (m);
 }
 
-double	*orthom(double *m, t_transform *t)
+double	*orthom(double *m, t_fdf *t)
 {
 	m[0] = 2 / (t->right - t->left);
 	m[1] = 0;
@@ -59,7 +59,7 @@ double	*orthom(double *m, t_transform *t)
 	return (m);
 }
 
-double	*perspectivem(double *m, t_transform *t)
+double	*perspectivem(double *m, t_fdf *t)
 {
 	m[0] = 2 * t->near / (t->right - t->left);
 	m[1] = 0;
@@ -80,7 +80,7 @@ double	*perspectivem(double *m, t_transform *t)
 	return (m);
 }
 
-double	*scalem(double *m, t_transform *t)
+double	*scalem(double *m, t_fdf *t)
 {
 	m[0] = WIDTH * 1.0 / 2;
 	m[1] = 0;
