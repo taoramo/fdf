@@ -12,7 +12,7 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # define WIDTH 1280
 # define HEIGHT 1080
-# define MODEL_SCALE 1
+# define MODEL_SCALE 10
 
 typedef struct s_vertex {
 	float	x;

@@ -5,6 +5,22 @@ int get_rgba(int r, int g, int b, int a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
+void	black_img(mlx_image_t *black)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	j = 1;
+	while (j <= HEIGHT)
+	{
+		while (i <= WIDTH)
+			mlx_put_pixel(black, 0x000000FF, j, i++);
+		j++;
+	}
+}
+
+
 void	color(t_transform *t)
 {
 	int		i;
@@ -102,12 +118,12 @@ void	render_loop(t_transform *t)
 	img_new = mlx_new_image(t->mlx, WIDTH, HEIGHT);
 	if (!img_new)
 		ft_error(t);
+	black_img(img_new);
 	apply_m(t->model, modelm(t->m, t));
 	apply_m(t->model, perspectivem(t->m, t));
-	printf("%f\n", t->model[0].z);
 	normalize_and_clip(t);
 	viewport(t);
-	memset(img_new->pixels, get_rgba(0, 0, 0, 0), img_new->width
+	memset(img_new->pixels, 255, img_new->width
 		* img_new->height * sizeof(int32_t));
 	i = 0;
 	while (i < t->msize)
@@ -172,7 +188,8 @@ void	render(t_transform *t)
 	apply_m(t->model, perspectivem(t->m, t));
 	normalize_and_clip(t);
 	viewport(t);
-	memset(t->img->pixels, get_rgba(0, 0, 0, 255), t->img->width
+//	black_img(t->img);
+	memset(t->img->pixels, 255, t->img->width
 		* t->img->height * sizeof(int32_t));
 	i = 0;
 	while (i < t->msize)

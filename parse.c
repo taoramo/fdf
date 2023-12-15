@@ -23,6 +23,10 @@ int	count_vertex(char **lines)
 	return (count);
 }
 
+//int	parse_color(int)
+//{
+	
+
 void	fill_array(t_vertex *array, char **lines, int i, int k)
 {
 	int		j;
@@ -47,7 +51,10 @@ void	fill_array(t_vertex *array, char **lines, int i, int k)
 			array[k].y = -1 * ft_atoi(split[0]);
 			array[k].z = i;
 			array[k].w = 1;
-			array[k].color = ft_hexstr_to_int(split[1]);
+			if (split[1])
+				array[k].color = ft_hexstr_to_int(split[1]) << 2 + 255;
+			else
+				array[k].color = 0x000000FF;
 			j++;
 			k++;
 			ft_free_split(split);
