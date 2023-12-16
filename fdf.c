@@ -2,7 +2,7 @@
 
 int	get_map_size(char *file)
 {
-	char	str[100];
+	char	str[2000];
 	int		fd;
 	int		size;
 	int		i;
@@ -12,7 +12,7 @@ int	get_map_size(char *file)
 	fd = open(file, O_RDONLY);
 	while (i)
 	{
-		i = read(fd, &str, 100);
+		i = read(fd, &str, 2000);
 		size += i;
 	}
 	close(fd);
@@ -25,14 +25,14 @@ int	main(int argc, char **argv)
 	char		*map;
 	t_fdf		t;
 
-	(void)argc;
+	if (argc != 2)
+		return (1);
 	map = ft_calloc(sizeof(char), get_map_size(argv[1]));
 	fd = open(argv[1], O_RDONLY);
 	if (!fd || !map)
 		return (1);
 	read(fd, map, get_map_size(argv[1]));
 	t.map = map;
-	parse(&t);
-	free(map);
 	close(fd);
+	parse(&t);
 }

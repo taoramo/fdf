@@ -1,16 +1,20 @@
+#include "MLX42/include/MLX42/MLX42.h"
 #include "include/fdf.h"
 
 void	black_img(mlx_image_t *black)
 {
-	int	i;
-	int	j;
+	unsigned int	i;
+	unsigned int	j;
 
-	i = 1;
-	j = 1;
-	while (j <= HEIGHT)
+	i = 0;
+	j = 0;
+	while (j < black->height)
 	{
-		while (i <= WIDTH)
-			mlx_put_pixel(black, 0x000000FF, j, i++);
+		while (i < black->width)
+		{
+			mlx_put_pixel(black, i, j, get_rgba(255, 255, 255, 255));
+			i++;
+		}
 		j++;
 	}
 }
@@ -62,23 +66,37 @@ void	normalize_and_clip(t_fdf *t)
 
 static void	ft_error(t_fdf *master)
 {
-	if (master->mlx)
-		mlx_terminate(master->mlx);
-	if (master->m)
-		free(master->m);
 	if (master->model)
 		free(master->model);
 	if (master->raw)
 		free(master->raw);
-	if (master)
-		free(master);
-	free(master->model);
+	if (master->map)
+		free(master->map);
+}
+
+void	memset_color(mlx_image_t *img, int rgba)
+{
+	unsigned long	i;
+
+	i = 0;
+	while (i < img->width * img->height * sizeof(int))
+	{
+		if (i % 4 == 0)
+			memset(&img->pixels[i], get_r(rgba), 1);
+		if (i % 4 == 1)
+			memset(&img->pixels[i], get_g(rgba), 1);
+		if (i % 4 == 2)
+			memset(&img->pixels[i], get_b(rgba), 1);
+		if (i % 4 == 3)
+			memset(&img->pixels[i], get_a(rgba), 1);
+		i++;
+	}
 }
 
 void	render_loop(t_fdf *t)
 {
 	mlx_image_t	*img_new;
-	mlx_image_t *temp;
+	mlx_image_t	*temp;
 
 	ft_memcpy(t->model, t->raw, t->msize * sizeof(t_vertex));
 	img_new = mlx_new_image(t->mlx, WIDTH, HEIGHT);
@@ -88,9 +106,6 @@ void	render_loop(t_fdf *t)
 	apply_m(t->model, perspectivem(t->m, t));
 	normalize_and_clip(t);
 	viewport(t);
-//	black_img(t->img);
-	memset(img_new->pixels, 255, img_new->width
-		* img_new->height * sizeof(int32_t));
 	temp = t->img;
 	t->img = img_new;
 	draw_lines(t);
@@ -101,18 +116,21 @@ void	render_loop(t_fdf *t)
 
 void	render(t_fdf *t)
 {
+	mlx_image_t	*background;
+
 	t = default_fdf(t);
+	background = mlx_new_image(t->mlx, WIDTH, HEIGHT);
+	memset_color(background, get_rgba(0, 0, 0, 255));
+	mlx_image_to_window(t->mlx, background, 0, 0);
 	ft_memcpy(t->model, t->raw, t->msize * sizeof(t_vertex));
 	apply_m(t->model, modelm(t->m, t));
 	apply_m(t->model, perspectivem(t->m, t));
 	normalize_and_clip(t);
 	viewport(t);
-	black_img(t->img);
 	draw_lines(t);
 	mlx_image_to_window(t->mlx, t->img, 0, 0);
 	mlx_loop_hook(t->mlx, &hook, t);
 	mlx_loop(t->mlx);
-	mlx_terminate(t->mlx);
 	ft_error(t);
 }
 
@@ -124,7 +142,14 @@ void	init_img(t_fdf *t)
 
 	t->model = ft_calloc(sizeof(t_vertex), t->msize);
 	mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
+	if (!mlx)
+		ft_error(t);
 	img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	if (!img)
+	{
+		mlx_terminate(mlx);
+		ft_error(t);
+	}
 	t->m = m;
 	t->mlx = mlx;
 	t->img = img;
@@ -132,12 +157,3 @@ void	init_img(t_fdf *t)
 		ft_error(t);
 	render(t);
 }
-/*
-	i = 0;
-	while (i < t->msize)
-	{
-		printf("x%f, y%f, z%f, w%f, enabled = %i\n", t->model[i].x, t->model[i].y, t->model[i].z, t->model[i].w, t->model[i].enabled);
-		i++;
-	}
-	printf("left %f, right %f, top %f, bottom %f, near %f, far %f", t->left, t->right, t->top, t->bottom, t->near, t->far);
-	*/

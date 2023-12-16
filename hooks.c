@@ -1,3 +1,4 @@
+#include "MLX42/include/MLX42/MLX42.h"
 #include "include/fdf.h"
 
 void	hook(void *param)
@@ -13,6 +14,10 @@ void	hook(void *param)
 		t->b = t->b + 0.1;
 	if (mlx_is_key_down(t->mlx, MLX_KEY_DOWN))
 		t->b = t->b - 0.1;
+	if (mlx_is_key_down(t->mlx, MLX_KEY_APOSTROPHE))
+		t->c = t->c + 0.1;
+	if (mlx_is_key_down(t->mlx, MLX_KEY_SLASH))
+		t->c = t->c - 0.1;
 	if (mlx_is_key_down(t->mlx, MLX_KEY_K))
 		t->tz = t->tz + 1;
 	if (mlx_is_key_down(t->mlx, MLX_KEY_I))
@@ -21,9 +26,9 @@ void	hook(void *param)
 		t->tx = t->tx - 1;
 	if (mlx_is_key_down(t->mlx, MLX_KEY_L))
 		t->tx = t->tx + 1;
-	if (mlx_is_key_down(t->mlx, MLX_KEY_U))
-		t->ty = t->ty - 1;
 	if (mlx_is_key_down(t->mlx, MLX_KEY_O))
+		t->ty = t->ty - 1;
+	if (mlx_is_key_down(t->mlx, MLX_KEY_U))
 		t->ty = t->ty + 1;
 	if (mlx_is_key_down(t->mlx, MLX_KEY_A))
 	{
@@ -37,5 +42,15 @@ void	hook(void *param)
 	}
 	if (mlx_is_key_down(t->mlx, MLX_KEY_C))
 		color(t);
+	if (mlx_is_key_down(t->mlx, MLX_KEY_ESCAPE))
+	{
+		if (t->model)
+			free(t->model);
+		if (t->raw)
+			free(t->raw);
+		if (t->map)
+			free(t->map);
+		exit(0);
+	}
 	render_loop(t);
 }

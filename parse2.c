@@ -1,3 +1,5 @@
+#include "include/fdf.h"
+
 int	count_wordsperline(char *str)
 {
 	int	i;
@@ -5,14 +7,18 @@ int	count_wordsperline(char *str)
 
 	count = 0;
 	i = 0;
-	if (str[0] != 0 && str[0] != '\n')
-		count++;
-	while (str[i] != '\n')
+	if (ft_isdigit(str[i]) || str[i] == '-')
 	{
-		if (str[i] == ' ')
-			count++;
+		count++;
+		i++;
+	}
+	else
 		while (str[i] == ' ')
 			i++;
+	while (str[i] != '\n' && str[i])
+	{
+		if (str[i - 1] == ' ' && str[i] != ' ' && str[i] != '\n')
+			count++;
 		i++;
 	}
 	return (count);

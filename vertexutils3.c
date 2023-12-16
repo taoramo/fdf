@@ -27,7 +27,7 @@ void	placeholder_vertex(t_vertex *array, int k)
 
 int	vertex_is_valid(t_vertex v)
 {
-	if (!v.enabled || v.x < 0 || v.z < 0 || v.y < 0)
+	if (!v.enabled || v.x <= 0 || v.z <= 0 || v.y <= 0 || v.color == 0)
 		return (0);
 	else
 		return (1);
