@@ -67,8 +67,13 @@ void	parse(t_fdf *t)
 	int			wpl_max;
 	int			linecount;
 
-	wpl_max = wordsperline_max(t->map);
 	linecount = count_lines(t->map);
+	if (linecount < 2)
+	{
+		free(t->map);
+		exit(1);
+	}
+	wpl_max = wordsperline_max(t->map);
 	array = ft_calloc(sizeof(t_vertex), wpl_max * linecount);
 	if (!array)
 	{

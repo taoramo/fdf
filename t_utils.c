@@ -55,6 +55,6 @@ t_fdf	*default_fdf(t_fdf *t)
 	t->angle = 60;
 	t->tx = 0;
 	t->ty = 0;
-	t->tz = -50;
+	t->tz = 0;
 	return (t);
 }
