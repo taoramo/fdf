@@ -4,7 +4,7 @@ LIBMLX = ./MLX42
 HEADERS = -I ./include -I $(LIBMLX)/include
 LIBS = $(MLX) $(LIBFT)
 MLX = $(LIBMLX)/build/libmlx42.a -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-SRCS = draw_lines.c draw_lines2.c hooks.c fdf.c matrix.c matrix2.c parse.c parse2.c pipeline.c t_utils.c vertexutils.c vertexutils2.c vertexutils3.c ft_hexstr_to_int.c color.c color2.c
+SRCS = draw_lines.c draw_lines2.c hooks.c fdf.c matrix.c parse.c parse2.c pipeline.c t_utils.c vertexutils.c vertexutils2.c ft_hexstr_to_int.c color.c color2.c transform.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 

@@ -1,28 +1,12 @@
 #include "include/fdf.h"
 
-int	find_min_x(t_vertex *array)
+float	find_min_y(t_vertex *array)
 {
-	int	i;
-	int	smallest;
+	int		i;
+	float	smallest;
 
 	i = 0;
-	smallest = INT_MAX;
-	while (array[i].w)
-	{
-		if (array[i].x < smallest)
-			smallest = array[i].x;
-		i++;
-	}
-	return (smallest);
-}
-
-int	find_min_y(t_vertex *array)
-{
-	int	i;
-	int	smallest;
-
-	i = 0;
-	smallest = INT_MAX;
+	smallest = 1.0 * INT_MAX;
 	while (array[i].w)
 	{
 		if (array[i].y < smallest)
@@ -32,29 +16,13 @@ int	find_min_y(t_vertex *array)
 	return (smallest);
 }
 
-int	find_max_x(t_vertex *array)
+float	find_max_y(t_vertex *array)
 {
-	int	i;
-	int	biggest;
+	int		i;
+	float	biggest;
 
 	i = 0;
-	biggest = INT_MIN;
-	while (array[i].w)
-	{
-		if (array[i].x > biggest)
-			biggest = array[i].x;
-		i++;
-	}
-	return (biggest);
-}
-
-int	find_max_y(t_vertex *array)
-{
-	int	i;
-	int	biggest;
-
-	i = 0;
-	biggest = INT_MIN;
+	biggest = 1.0 * INT_MIN;
 	while (array[i].w)
 	{
 		if (array[i].y > biggest)

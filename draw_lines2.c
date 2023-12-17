@@ -19,9 +19,9 @@ int	inter_color(t_vertex va, t_vertex vb, t_fdf *t)
 		p = ft_abs_float((t->x - va.x) / (vb.x - va.x));
 	else
 		p = ft_abs_float((t->y - va.y) / (vb.y - va.y));
-	red = get_r(vb.color) * p + get_r(va.color) * (p - 1);
-	green = get_g(vb.color) * p + get_g(va.color) * (p - 1);
-	blue = get_b(vb.color) * p + get_b(va.color) * (p - 1);
+	red = get_r(vb.color) * p + get_r(va.color) * (1 - p);
+	green = get_g(vb.color) * p + get_g(va.color) * (1 - p);
+	blue = get_b(vb.color) * p + get_b(va.color) * (1 - p);
 	return (get_rgba(red, green, blue, 255));
 }
 
@@ -45,7 +45,7 @@ void	dda(t_vertex v1, t_vertex v2, t_fdf *t)
 	{
 		if (pixel_is_valid(round(t->x), round(t->y)))
 			mlx_put_pixel(t->img, round(t->x), round(t->y),
-				v2.color);
+				inter_color(v1, v2, t));
 		t->x = t->x + t->dx;
 		t->y = t->y + t->dy;
 		i++;

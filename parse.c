@@ -5,7 +5,8 @@ int	parse_color(char *map, t_fdf *t, int i, int k)
 	i++;
 	t->raw[k].color = (ft_hexstr_to_int(&map[i]) << 8) + 0xFF;
 	i += 2;
-	while (ft_isdigit(map[i]) || (map[i] >= 65 && map[i] <= 70))
+	while (ft_isdigit(map[i]) || (map[i] >= 65 && map[i] <= 70)
+		|| (map[i] >= 97 && map[i] <= 102))
 		i++;
 	return (i);
 }
@@ -19,9 +20,15 @@ int	make_vertex(t_fdf *t, int i, int k, int j)
 	return (1);
 }
 
-void	insert_placeholders(t_fdf *t, int *k, int wpl)
+void	insert_placeholders(t_fdf *t, int *k)
 {
-	while (wpl < t->stride)
+	if (*k >= (t->stride * t->linecount))
+	{
+		free(t->map);
+		free(t->raw);
+		exit(1);
+	}
+	while (*k % t->stride != 0)
 	{
 		placeholder_vertex(t->raw, *k);
 		*k = *k + 1;
@@ -30,14 +37,11 @@ void	insert_placeholders(t_fdf *t, int *k, int wpl)
 
 void	parse2(t_fdf *t, int i, int j, int k)
 {
-	int	wpl;
-
 	while (t->map[i])
 	{
-		wpl = 0;
 		while (!ft_isdigit(t->map[i]))
 			i++;
-		wpl += make_vertex(t, i, k, j);
+		make_vertex(t, i, k, j);
 		while (ft_isdigit(t->map[i]) || t->map[i] == '-')
 			i++;
 		if (t->map[i] == ',')
@@ -49,8 +53,7 @@ void	parse2(t_fdf *t, int i, int j, int k)
 		k++;
 		if (t->map[i] == '\n')
 		{
-//			insert_placeholders(t, &k, wpl);
-			(void)wpl;
+			insert_placeholders(t, &k);
 			j++;
 			i++;
 		}
@@ -66,7 +69,7 @@ void	parse(t_fdf *t)
 
 	wpl_max = wordsperline_max(t->map);
 	linecount = count_lines(t->map);
-	array = ft_calloc(sizeof(t_vertex), wpl_max * linecount * 2);
+	array = ft_calloc(sizeof(t_vertex), wpl_max * linecount);
 	if (!array)
 	{
 		free(t->map);

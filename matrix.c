@@ -51,7 +51,7 @@ double	*orthom(double *m, t_fdf *t)
 	m[8] = 0;
 	m[9] = 0;
 	m[10] = -2 / (t->far - t->near);
-	m[11] = -1 * (t->near + t->far) / (t->near - t->far);
+	m[11] = -1 * (t->far + t->near) / (t->far - t->near);
 	m[12] = 0;
 	m[13] = 0;
 	m[14] = 0;

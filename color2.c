@@ -13,7 +13,7 @@ void	color(t_fdf *t)
 	i = 0;
 	while (i < t->msize)
 	{
-		ratio = 2 * (t->raw[i].y - t->min_y) * (t->max_y - t->min_y);
+		ratio = 2 * (t->raw[i].y - t->min_y) / (t->max_y - t->min_y);
 		if (255 * (1 - ratio) > 0)
 			red = 255 * (1 - ratio);
 		else
