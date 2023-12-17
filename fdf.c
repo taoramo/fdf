@@ -10,6 +10,8 @@ int	get_map_size(char *file)
 	i = 1;
 	size = 0;
 	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (0);
 	while (i)
 	{
 		i = read(fd, &str, 2000);
@@ -24,7 +26,6 @@ int	main(int argc, char **argv)
 	int			fd;
 	char		*map;
 	t_fdf		t;
-	int			i;
 
 	if (argc != 2)
 		return (1);
@@ -32,7 +33,7 @@ int	main(int argc, char **argv)
 	if (!map)
 		free(map);
 	fd = open(argv[1], O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		return (1);
 	if (!read(fd, map, get_map_size(argv[1])))
 		return (1);

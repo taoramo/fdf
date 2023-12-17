@@ -74,17 +74,24 @@ void	normalize_and_clip(t_fdf *t)
 	int	i;
 
 	i = 0;
-	while (i < t->msize)
 	{
-		t->model[i].x = t->model[i].x / t->model[i].w;
-		t->model[i].y = t->model[i].y / t->model[i].w;
-		t->model[i].z = t->model[i].z / t->model[i].w;
-		if (t->model[i].z > -1 && t->model[i].z < 1
-			&& t->model[i].x > -1 && t->model[i].x < 1
-			&& t->model[i].y > -1 && t->model[i].y < 1)
-			t->model[i].enabled = true;
-		else
-			t->model[i].enabled = false;
-		i++;
+		while (i < t->msize)
+		{
+			if (t->persp == true && t->model[i].z < 0)
+				t->model[i].enabled = false;
+			else
+			{
+				t->model[i].x = t->model[i].x / t->model[i].w;
+				t->model[i].y = t->model[i].y / t->model[i].w;
+				t->model[i].z = t->model[i].z / t->model[i].w;
+				if (t->model[i].z > -1 && t->model[i].z < 1
+					&& t->model[i].x > -1 && t->model[i].x < 1
+					&& t->model[i].y > -1 && t->model[i].y < 1)
+					t->model[i].enabled = true;
+				else
+					t->model[i].enabled = false;
+			}
+			i++;
+		}
 	}
 }

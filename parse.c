@@ -22,7 +22,7 @@ int	make_vertex(t_fdf *t, int i, int k, int j)
 
 void	insert_placeholders(t_fdf *t, int *k)
 {
-	if (*k >= (t->stride * t->linecount))
+	if (*k > (t->stride * t->linecount))
 	{
 		free(t->map);
 		free(t->raw);
