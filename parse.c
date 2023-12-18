@@ -55,6 +55,8 @@ void	parse2(t_fdf *t, int i, int j, int k)
 		{
 			insert_placeholders(t, &k);
 			j++;
+			if (j == t->linecount)
+				break ;
 			i++;
 		}
 	}
@@ -74,7 +76,7 @@ void	parse(t_fdf *t)
 		exit(1);
 	}
 	wpl_max = wordsperline_max(t->map);
-	array = ft_calloc(sizeof(t_vertex), wpl_max * linecount);
+	array = ft_calloc(sizeof(t_vertex), wpl_max * (linecount + 1));
 	if (!array)
 	{
 		free(t->map);

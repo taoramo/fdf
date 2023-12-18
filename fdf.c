@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (1);
-	map = ft_calloc(sizeof(char), get_map_size(argv[1]));
+	map = ft_calloc(sizeof(char), get_map_size(argv[1]) + 1);
 	if (!map)
 		free(map);
 	fd = open(argv[1], O_RDONLY);

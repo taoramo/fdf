@@ -1,5 +1,5 @@
 NAME = fdf
-CFLAGS = -g -Wextra -Wall -Werror -Wunreachable-code -o2fast
+CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -o2fast
 LIBMLX = ./MLX42
 HEADERS = -I ./include -I $(LIBMLX)/include
 LIBS = $(MLX) $(LIBFT)
@@ -11,23 +11,23 @@ LIBFT = ./libft/libft.a
 all: libmlx $(NAME)
 
 libmlx:
-	@cmake -DDEBUG=1 $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
+	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 $(LIBFT):
 	make -C ./libft/
 
 clean:
-	@rm -rf $(OBJS)
-	@rm -rf $(LIBMLX)/build
+	rm -rf $(OBJS)
+	rm -rf $(LIBMLX)/build
 
 fclean: clean
-	@rm -rf $(NAME)
+	rm -rf $(NAME)
 
 re: clean all
 

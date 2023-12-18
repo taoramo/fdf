@@ -53,8 +53,10 @@ int	count_lines(char *map)
 	while (map[i])
 	{
 		if (map[i] == '\n')
-			count ++;
+			count++;
 		i++;
 	}
+	if (map[i - 1] != '\n' && i > 0)
+		count++;
 	return (count);
 }

@@ -23,7 +23,8 @@ void	color(t_fdf *t)
 		else
 			blue = 0;
 		green = 255 - blue - red;
-		t->raw[i].color = get_rgba(red, green, blue, 255);
+		if (t->raw[i].color != 0)
+			t->raw[i].color = get_rgba(red, green, blue, 255);
 		i++;
 	}
 }
