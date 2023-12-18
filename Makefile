@@ -25,6 +25,7 @@ $(LIBFT):
 clean:
 	rm -rf $(OBJS)
 	rm -rf $(LIBMLX)/build
+	make clean -C ./libft/
 
 fclean: clean
 	rm -rf $(NAME)
