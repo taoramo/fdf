@@ -32,7 +32,7 @@ void	render_loop(t_fdf *t)
 	img_new = mlx_new_image(t->mlx, WIDTH, HEIGHT);
 	if (!img_new)
 		ft_exit(t, 1);
-	apply_m(t->model, modelm(t->m, t));
+	apply_m(t->model, modelm(t->m, t), t->msize);
 	if (!t->persp)
 		apply_ortho(t);
 	else

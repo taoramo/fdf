@@ -12,12 +12,12 @@
 
 #include "include/fdf.h"
 
-void	apply_m(t_vertex *model, double *m)
+void	apply_m(t_vertex *model, double *m, int modelsize)
 {
 	int	i;
 
 	i = 0;
-	while (model[i].w)
+	while (i < modelsize)
 	{
 		mmult(&model[i], m);
 		i++;

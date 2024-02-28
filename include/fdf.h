@@ -26,7 +26,8 @@
 # define HEIGHT 1080
 # define MODEL_SCALE 10
 
-typedef struct s_vertex {
+typedef struct s_vertex
+{
 	float	x;
 	float	y;
 	float	z;
@@ -34,7 +35,8 @@ typedef struct s_vertex {
 	int		color;
 	bool	enabled;
 }	t_vertex;
-typedef struct s_fdf {
+typedef struct s_fdf
+{
 	float				tx;
 	float				ty;
 	float				tz;
@@ -80,7 +82,7 @@ t_fdf		*init_fdf(t_fdf *t);
 void		init_img(t_fdf *t);
 double		*scalem(double *m, t_fdf *t);
 void		hook(void *t);
-void		apply_m(t_vertex *model, double *m);
+void		apply_m(t_vertex *model, double *m, int modelsize);
 int			ft_hexstr_to_int(char *str);
 void		make_fustrum(double fovy, double aspect, t_fdf *t);
 void		make_fustrum_ortho(double fovy, double aspect, t_fdf *t);

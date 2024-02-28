@@ -15,13 +15,13 @@
 void	apply_ortho(t_fdf *t)
 {
 	make_fustrum_ortho(ft_abs_float(t->angle % 180), WIDTH * 1.0 / HEIGHT, t);
-	apply_m(t->model, orthom(t->m, t));
+	apply_m(t->model, orthom(t->m, t), t->msize);
 }
 
 void	apply_perspective(t_fdf *t)
 {
 	make_fustrum(ft_abs_float(t->angle % 180), WIDTH * 1.0 / HEIGHT, t);
-	apply_m(t->model, perspectivem(t->m, t));
+	apply_m(t->model, perspectivem(t->m, t), t->msize);
 }
 
 void	make_fustrum(double fovy, double aspect, t_fdf *t)
