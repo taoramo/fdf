@@ -1,4 +1,5 @@
-A wireframe rasteriser written in C using MLX42 library. First graphics project in the 42 curriculum. It was left in a janky state but I'm still proud of it. Learned a lot about 3d graphics and built everything from the ground up.
+## A wireframe rasteriser written in C.
+First graphics project in the 42 curriculum. It was left in a janky state but I'm still proud of it. Learned a lot about 3d graphics and built everything from the ground up.
 
 Installation:
 
