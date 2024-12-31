@@ -3,7 +3,7 @@ CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -o2fast
 LIBMLX = ./MLX42
 HEADERS = -I ./include -I $(LIBMLX)/include
 LIBS = $(MLX) $(LIBFT)
-MLX = $(LIBMLX)/build/libmlx42.a -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+MLX = $(LIBMLX)/build/libmlx42.a -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.4/lib/"
 SRCS = draw_lines.c draw_lines2.c hooks.c fdf.c matrix.c parse.c parse2.c pipeline.c t_utils.c vertexutils.c vertexutils2.c ft_hexstr_to_int.c color.c color2.c transform.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
